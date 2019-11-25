@@ -1,6 +1,9 @@
 import process_data as proc
 import display as disp
 
+from datetime import datetime
+
+#
 def cmd_menu():
     command = select_type_inp(["Enter New Value", "Draw Graph", "Exit"])
 
@@ -13,10 +16,10 @@ def cmd_menu():
 
 def draw_graph():
     type = select_type_inp(["Weekly", "Monthly", "Yearly", "Back"])
-    type = type[0:len(type) - 2]
     if (type == "Back"):
         cmd_menu()
     else:
+        type = type[0:len(type) - 2]
         file = select_type_inp(["Basic", "Deluxe", "Total", "Back"])
         if (file == "Back"):
             draw_graph()
