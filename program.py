@@ -3,7 +3,7 @@ import display as disp
 
 from datetime import datetime
 
-#
+""" Command line interface for main menu"""
 def cmd_menu():
     command = select_type_inp(["Enter New Value", "Draw Graph", "Exit"])
 
@@ -14,20 +14,10 @@ def cmd_menu():
     else:
         raise SystemExit
 
-def draw_graph():
-    type = select_type_inp(["Weekly", "Monthly", "Yearly", "Back"])
-    if (type == "Back"):
-        cmd_menu()
-    else:
-        type = type[0:len(type) - 2]
-        file = select_type_inp(["Basic", "Deluxe", "Total", "Back"])
-        if (file == "Back"):
-            draw_graph()
-        else:
-            disp.draw(proc.calc_rev(file + ".txt", type), file, type)
-
+""" Command line interface for entering new value to text file """
 def enter_val():
     command = select_type_inp(["Basic", "Deluxe", "Total", "Back"])
+    
     if (command == "Back"):
         cmd_menu()
     else:
@@ -45,8 +35,28 @@ def enter_val():
 
         cmd_menu()
 
+""" Command line interface for plotting graph for revenue """
+def draw_graph():
+    type = select_type_inp(["Weekly", "Monthly", "Yearly", "Back"])
+
+    if (type == "Back"):
+        cmd_menu()
+    else:
+        type = type[0:len(type) - 2]
+        file = select_type_inp(["Basic", "Deluxe", "Total", "Back"])
+
+        if (file == "Back"):
+            draw_graph()
+        else:
+            disp.draw(proc.calc_rev(file + ".txt", type), file, type)
+
+""" Reusable code for selecting an option in CLI
+    Params: List of options as strings
+    Returns: Chosen option as string
+"""
 def select_type_inp(strings):
     valid_inp = False
+
     while (not valid_inp):
         for i in range(1, len(strings) + 1):
             print("[" + str(i) + "] " + strings[i - 1])
@@ -55,17 +65,22 @@ def select_type_inp(strings):
         valid_commands = []
         for i in range(1, len(strings) + 1):
             valid_commands.append(str(i))
+
         if (command in valid_commands):
             valid_inp = True
 
     return strings[int(command) - 1]
 
+""" Reusable code for entering an integer value in CLI
+    Returns: Integer value
+"""
 def enter_val_inp():
     valid_inp = False
     while (not valid_inp):
         val = input("Enter Value: ")
         if (val.isdigit()):
             valid_inp = True
+
     return val
 
 cmd_menu()
